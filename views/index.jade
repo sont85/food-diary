@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  h1= title
+  div.text-center
+    h1 Food Diary
   p Welcome to #{title}
 
   table.table
@@ -17,10 +18,10 @@ block content
       td {{user.weight}}
       td {{weightGained}}
       td {{currentWeight}}
-  h1
-  button.btn.btn-primary(ng-click="showUser()") Show User Form
+  div.text-center
+    button.btn.btn-primary(ng-click="showUser()") Show User Form
   div.row(ng-show="showUserForm")
-    h3 User
+    h3.text-center.page-header User
     div.col-sm-6
       label Name
       input.form-control(placeholder="Name" ng-model="user.name" required)
@@ -39,10 +40,11 @@ block content
       select.form-control(ng-model="user.unit" required)
         option(value="in") Inches
         option(value="cm") Centimeters
-    button.btn.btn-primary(ng-click="saveUser()") Save User
+    div.text-center
+      button.btn.btn-primary(ng-click="saveUser()") Save User
   div.row
-    h3 Food
-    div.col-sm-6
+    h3.page-header.text-center Food Entry
+    div.col-sm-6.col-sm-offset-3
       label Description
       input.form-control(placeholder="Name" ng-model="food.description" required)
       label Meal
@@ -54,7 +56,8 @@ block content
       input.form-control(placeholder="Calories" ng-model="food.calories" required)
       label Servings
       input.form-control(placeholder="Servings" ng-model="food.servings" required)
-  button.btn.btn-primary(ng-click="saveFood()") Save Food
+      div.text-center
+        button.btn.btn-primary(ng-click="saveFood()") Save Food
   table.table
     tr
       th Edit

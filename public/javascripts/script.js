@@ -46,16 +46,20 @@ app.controller("MainCtrl", function($scope, $http, httpService, BMIService){
     $scope.showUserForm = true;
   };
   $scope.saveUser = function() {
-    $scope.currentWeight = parseInt($scope.user.weight);
-    $scope.showUserForm = false;
-    $scope.BMI = BMIService.computeBMI($scope.user);
+    if ($scope.user) {
+      $scope.currentWeight = parseInt($scope.user.weight);
+      $scope.showUserForm = false;
+      $scope.BMI = BMIService.computeBMI($scope.user);
+    }
   };
   $scope.saveFood = function() {
-    $scope.food.date = (new Date()).toLocaleDateString();
-    $scope.foodList.push($scope.food);
-    $scope.weightGained = BMIService.computeWeight($scope.foodList);
-    $scope.currentWeight = BMIService.calculateWeightGained($scope.currentWeight, $scope.weightGained);
-    $scope.food = "";
+    if ($scope.food && $scope.user) {
+      $scope.food.date = (new Date()).toLocaleDateString();
+      $scope.foodList.push($scope.food);
+      $scope.weightGained = BMIService.computeWeight($scope.foodList);
+      $scope.currentWeight = BMIService.calculateWeightGained($scope.currentWeight, $scope.weightGained);
+      $scope.food = "";
+    }
 
   };
   $scope.editFood = function(index) {
@@ -64,6 +68,7 @@ app.controller("MainCtrl", function($scope, $http, httpService, BMIService){
   $scope.deleteFood = function(index, editFood) {
     var spliced = $scope.foodList.splice(index, 1);
     $scope.weightLost = BMIService.computeWeight(spliced);
+    $scope.weightGained -= scope.weightLost;
     $scope.currentWeight = BMIService.calculateWeightLost($scope.currentWeight, $scope.weightLost);
   };
   $scope.submitEdit = function(index, editFood) {
