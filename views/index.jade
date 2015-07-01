@@ -1,0 +1,92 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  table.table
+    tr
+      th Name
+      th BMI
+      th Old Weight
+      th Weight Gained
+      th Current Weight
+    tr
+      td {{user.name}}
+      td {{BMI}}
+      td {{user.weight}}
+      td {{weightGained}}
+      td {{currentWeight}}
+  h1
+  button.btn.btn-primary(ng-click="showUser()") Show User Form
+  div.row(ng-show="showUserForm")
+    h3 User
+    div.col-sm-6
+      label Name
+      input.form-control(placeholder="Name" ng-model="user.name" required)
+      label Age
+      input.form-control(placeholder="Age" ng-model="user.age" required)
+      label Gender
+      select.form-control(placeholder="Gender" ng-model="user.gender" required)
+        option(value="Male") Male
+        option(value="Female") Female
+    div.col-sm-6
+      label Weight
+      input.form-control(placeholder="Weight" ng-model="user.weight" required)
+      label Height
+      input.form-control(placeholder="Height" ng-model="user.height" required)
+      label Unit
+      select.form-control(ng-model="user.unit" required)
+        option(value="in") Inches
+        option(value="cm") Centimeters
+    button.btn.btn-primary(ng-click="saveUser()") Save User
+  div.row
+    h3 Food
+    div.col-sm-6
+      label Description
+      input.form-control(placeholder="Name" ng-model="food.description" required)
+      label Meal
+      select.form-control(required ng-model="food.meal")
+        option(value="Breakfast") Breakfast
+        option(value="Lunch") Lunch
+        option(value="Dinner") Dinner
+      label Calories
+      input.form-control(placeholder="Calories" ng-model="food.calories" required)
+      label Servings
+      input.form-control(placeholder="Servings" ng-model="food.servings" required)
+  button.btn.btn-primary(ng-click="saveFood()") Save Food
+  table.table
+    tr
+      th Edit
+      th Delete
+      th Description
+      th Meal
+      th Calories
+      th Servings
+      th Date
+    tr(ng-hide="showEditFood", ng-repeat="food in foodList track by $index")
+      td
+        button.btn.btn-warning.btn-sm(ng-click="editFood($index)") Edit
+      td
+        button.btn.btn-danger.btn-sm(ng-click="deleteFood($index)") Delete
+      td {{food.description}}
+      td {{food.meal}}
+      td {{food.calories}}
+      td {{food.servings}}
+      td {{food.date}}
+    tr(ng-show="showEditFood")
+      td
+      td
+        button.btn.btn-success(ng-click="submitEdit($index, editFood)") Submit
+      td
+        input.form-control(ng-model="editFood.description" placeholder="Food Description")
+      td
+        select.form-control(ng-model="editFood.meal" placeholder="Meal Type")
+          option(value = "Breakfast") Breakfast
+          option(value = "Lunch") Lunch
+          option(value = "Dinner") Dinner
+      td
+        input.form-control(ng-model="editFood.calories" placeholder="Calories")
+      td
+        input.form-control(ng-model="editFood.servings" placeholder="Servings")
+      td 06/30/2015
